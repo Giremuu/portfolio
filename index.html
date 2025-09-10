@@ -9,47 +9,50 @@
   <link rel="alternate" hreflang="fr" href="https://Giremuu.github.io/portfolio/" />
   <link rel="alternate" hreflang="en" href="https://Giremuu.github.io/portfolio/en/" />
   <link rel="alternate" hreflang="ja" href="https://Giremuu.github.io/portfolio/jp/" />
-  
+
 </head>
 <body>
-  <header>
-    <h1>Giremu</h1>
-    <nav>
-      <a href="#home">Accueil</a>
-      <a href="#projects">Projets</a>
-      <a href="#about">À propos</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  <!-- Switch de langue -->
-  <nav aria-label="Langue" style="margin-top:.5rem">
-    <a href="./">FR</a> |
-    <a href="./en/">EN</a> |
-    <a href="./jp/">JP</a>
-  </nav>
-</header>
+  <header class="site-header" role="banner">
+    <div class="nav">
+      <a class="brand" href="#home" aria-label="Giremu Home">
+        <span class="logo" aria-hidden="true"></span>
+        <strong>Giremu</strong>
+      </a>
 
-  <main>
-    <section id="home">
-      <h2>Bienvenue</h2>
-      <p>Je suis étudiant en cybersécurité et développeur web. Voici mon portfolio.</p>
-      <button id="themeToggle">Changer de thème</button>
-    </section>
+      <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
 
-    <section id="projects">
-      <h2>Projets</h2>
-      <div id="projectList"></div>
-    </section>
+      <nav class="nav-links" id="navLinks" role="navigation" aria-label="Navigation principale">
+        <a class="nav-link" href="#home">Accueil</a>
+        <a class="nav-link" href="#projects">Projets</a>
+        <a class="nav-link" href="#about">À propos</a>
+        <a class="nav-link" href="#contact">Contact</a>
 
-    <section id="about">
-      <h2>À propos</h2>
-      <p>Quelques infos rapides sur moi...</p>
-    </section>
+        <div class="nav-divider" aria-hidden="true"></div>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Email : <a href="mailto:contact@example.com">contact@example.com</a></p>
+        <!-- Switch de langue (liens) -->
+        <div class="lang-switch">
+          <a href="./">FR</a> |
+          <a href="./en/">EN</a> |
+          <a href="./jp/">JP</a>
+        </div>
+
+        <!-- Thème -->
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Basculer thème">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+
+    <main>
+    <section id="under-construction" style="text-align:center; padding:4rem 2rem;">
+        <h2 style="font-size:2rem; margin-bottom:1rem;">🚧 Page under construction 🚧</h2>
+        <p style="margin-bottom:2rem;">
+        This section is not ready yet.<br>
+        Please come back later!
+        </p>
+        <a href="../" class="btn">← Back to Home</a>
     </section>
-  </main>
+    </main>
 
   <footer>
     <p>© 2025 Giremu</p>
