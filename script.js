@@ -1,7 +1,7 @@
 // ===== Projets =====
 const projects = [
-  { title: "Re Leveling", desc: "WebApp perso inspirée de Solo Leveling." },
-  { title: "Webfolio Giremu", desc: "Landing page portfolio sombre." }
+  { title: "Oeee", desc: "Alors là ?" },
+  { title: "PYTHON JEU WOW", desc: "Pas mal pas mal" }
 ];
 
 const projectList = document.getElementById("projectList");

@@ -1,34 +1,54 @@
-/* ========= Variables & thèmes ========= */
+/* =========================================================
+   THEME & VARIABLES — Palette minimale, sombre lisible
+   ---------------------------------------------------------
+   - --bg1 : couleur d'arrière-plan globale (body)
+   - --bg2 : couleur d'arrière-plan des BLOCS DE CONTENU (sections)
+   - --text : couleur du texte de base
+   - --primary : accent (liens hover, boutons, etc.)
+   - --card : surface "carte" (menus, cards, toasts)
+   ========================================================= */
 :root {
-  --bg: #0b0f14;
+  --bg1: #0b0f14;
+  --bg2: #18202a;   /* ⟵ Désormais réservée aux <section> */
   --text: #e7edf5;
   --primary: #5ea2ff;
   --card: #141a22;
 }
 
+/* ---------- Variante claire (body.light) ----------
+   Astuce : on garde le contrat sémantique (bg1=fond page, bg2=sections),
+   mais avec des valeurs adaptées au mode clair. */
 body.light {
-  --bg: #f7fafc;
+  --bg1: #c0c0c0;
+  --bg2: #e7e6e6;   /* ⟵ restera appliqué UNIQUEMENT aux sections */
   --text: #0d1b2a;
-  --card: #ffffff;
+  --card: #e7edf5;
   --primary: #2563eb;
 }
 
-/* ========= Base ========= */
+/* =========================================================
+   RÈGLES DE BASE — reset léger + typo + couleurs globales
+   ========================================================= */
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: var(--bg);
+  background: var(--bg1);   /* ⟵ Fond global de la page */
   color: var(--text);
   line-height: 1.6;
 }
 
+/* Liens : couleur héritée pour rester harmonieux, primary au survol */
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--primary); }
 
+/* Padding générique des sections (peut coexister avec des paddings spécifiques) */
 section { padding: 2rem; }
 
-/* Bouton générique (ex: Back to Home) */
+/* =========================================================
+   BOUTON GÉNÉRIQUE — Exemple : "Back to Home"
+   ========================================================= */
 .btn {
   display: inline-block;
   padding: .6rem 1rem;
@@ -38,27 +58,31 @@ section { padding: 2rem; }
   font-weight: 700;
 }
 
-/* Cartes projets */
+/* =========================================================
+   CARTES PROJETS — Grille fluide + surface "card"
+   ========================================================= */
 #projectList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
 }
+
 .card {
-  background: var(--card);
+  background: var(--card);                /* ⟵ Surface neutre distincte de bg2 */
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,.3);
 }
 
-/* ========= Header sticky + nav ========= */
-/* ATTENTION: on n’utilise plus le sélecteur générique `header {}` */
+/* =========================================================
+   HEADER STICKY + NAV — léger blur, translucide sur bg1
+   ========================================================= */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 1000;
   backdrop-filter: blur(8px) saturate(120%);
-  background: color-mix(in srgb, var(--bg), transparent 18%);
+  background: color-mix(in srgb, var(--bg1), transparent 18%);
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
 .site-header.drop-shadow { box-shadow: 0 8px 24px rgba(0,0,0,.25); }
@@ -72,24 +96,38 @@ section { padding: 2rem; }
   gap: 1rem;
 }
 
-/* Marque */
+/* ---------- Marque + mascotte ---------- */
 .brand {
   display: inline-flex;
   align-items: center;
   gap: .6rem;
   color: var(--text);
   font-weight: 800;
+  text-decoration: none;
+}
+.logo-img{
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+  transition: transform .15s ease, filter .15s ease;
+}
+.brand:hover .logo-img{
+  transform: translateY(-1px) scale(1.03);
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.4));
 }
 
-
-/* ========= Bouton Menu à droite + dropdown ========= */
+/* =========================================================
+   MENU DROITE + DROPDOWN — calé sous le bouton
+   ========================================================= */
 .menu-wrap {
   margin-left: auto;
   position: relative;
-  isolation: isolate; /* garantit un z-index propre */
+  isolation: isolate; /* ⟵ garantit un contexte z-index propre */
 }
 
-/* Bouton */
+/* Bouton du menu */
 .menu-btn {
   background: var(--card);
   color: var(--text);
@@ -104,7 +142,7 @@ section { padding: 2rem; }
 .menu-btn:focus-visible { outline: none; }
 .menu-btn:hover { border-color: rgba(255,255,255,.25); }
 
-/* Dropdown ancré SOUS le bouton, aligné à droite */
+/* Dropdown : animé, ancré en haut/droite du bouton */
 .menu-dropdown {
   position: absolute;
   right: 0;
@@ -125,7 +163,7 @@ section { padding: 2rem; }
   transition: opacity .15s ease, transform .15s ease;
 
   z-index: 10; /* au-dessus du bouton */
-  clip-path: inset(0 round 12px); /* évite l’artefact sur les coins */
+  clip-path: inset(0 round 12px); /* évite l’artefact sur les coins arrondis */
 }
 .menu-dropdown.open {
   opacity: 1;
@@ -133,6 +171,7 @@ section { padding: 2rem; }
   pointer-events: auto;
 }
 
+/* Items internes au menu */
 .menu-item {
   display: block;
   width: 100%;
@@ -146,34 +185,27 @@ section { padding: 2rem; }
   cursor: pointer;
   font: inherit;
 }
-.menu-item:hover,
-.menu-item:focus {
-  background: rgba(255,255,255,.08);
-  outline: none;
-}
+/* UX : feedback au survol sans changer le layout */
+.menu-item:hover { background: rgba(255,255,255,.08); }
+/* Accessibilité : focus neutre visuellement (tu peux ajouter un outline si besoin) */
+.menu-item:focus { outline: none; background: transparent; }
 
+/* Séparateur visuel interne */
 .menu-sep {
   height: 1px;
   margin: .45rem 0;
   background: rgba(255,255,255,.12);
 }
 
-/* ========= Footer ========= */
-footer { padding: 1rem 2rem; color: #9fb1c2; }
-
-/* ========= Responsive léger ========= */
-@media (max-width: 600px) {
-  .menu-dropdown { min-width: 200px; }
-}
-
-/* Langue courante */
+/* Langue courante : grisée et non cliquable */
 .menu-item.current-lang {
   color: var(--primary);
   font-weight: 600;
   cursor: default;
-  pointer-events: none; /* désactive le clic pour éviter de recharger la même page */
+  pointer-events: none;
 }
 
+/* Petits drapeaux (PNG) avec liseré pour contraste multi-fonds */
 .flag {
   width: 1.2em;
   height: auto;
@@ -182,129 +214,62 @@ footer { padding: 1rem 2rem; color: #9fb1c2; }
   box-shadow: 0 0 0 1px rgba(0,0,0,.15);
   vertical-align: -2px;
 }
-.menu-item.current-lang {
-  color: var(--primary);
-  font-weight: 600;
-  pointer-events: none;
-}
 
-/* Marque + mascotte */
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: .6rem;
-  color: var(--text);
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.logo-img{
-  width: 36px;               /* ajuste à 32–48px selon ton goût */
-  height: 36px;
-  object-fit: contain;
-  display: block;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
-  transition: transform .15s ease, filter .15s ease;
-}
-
-/* Petite vie au survol, discret */
-.brand:hover .logo-img{
-  transform: translateY(-1px) scale(1.03);
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,.4));
-}
-
-
+/* =========================================================
+   FOOTER — léger mélange translucide sur bg1
+   ========================================================= */
 .site-footer {
-  border-top: 1px solid rgba(255,255,255,.08);
-  background: color-mix(in srgb, var(--bg), transparent 10%);
-  padding: 1.25rem 0 2rem;
-  color: #9fb1c2;
-  font-size: .95rem;
+  border-top: 1px solid rgba(0,0,0,.08);
+  background: color-mix(in srgb, var(--bg1), transparent 10%);
+  padding: 1.25rem 0 1.70rem;
+  color: var(--text);
+  font-size: .90rem;
+  opacity: .85; /* texte adouci, lecture confort */
 }
-
 .footer-inner {
   width: min(1100px, 92vw);
   margin: 0 auto;
   display: grid;
-  gap: .6rem;
+  gap: .4rem;
   text-align: center;
 }
-
 .footer-legal a { color: var(--primary); text-decoration: none; }
 .footer-legal a:hover { text-decoration: underline; }
 
-.footer-links {
-  display: inline-flex;
-  gap: .5rem;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.footer-links a {
+.footer-copy {
   color: var(--text);
-  opacity: .9;
-  text-decoration: none;
-  font-weight: 600;
+  opacity: .7;
 }
-.footer-links a:hover { color: var(--primary); opacity: 1; }
 
-.footer-copy { color: #7f93a6; margin-top: .3rem; }
-
-
+/* Boutons sociaux ronds (mêmes surfaces que .card pour cohérence) */
 .footer-social {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin: .8rem 0;
+  gap: 2.5rem;
 }
-
 .social-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 44px; height: 44px;
   border-radius: 50%;
   background: var(--card);
   border: 1px solid rgba(255,255,255,.12);
   color: var(--text);
   text-decoration: none;
-  transition: transform .15s ease, background .2s ease, color .2s ease;
+  transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease;
 }
-
 .social-btn:hover {
   background: var(--primary);
+  border-color: transparent;
   color: #fff;
   transform: translateY(-2px) scale(1.05);
 }
+.icon { width: 22px; height: 22px; }
 
-.icon {
-  width: 22px;
-  height: 22px;
-}
-
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translateX(-50%) translateY(10px);
-  background: var(--card);
-  color: var(--text);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 10px;
-  padding: .6rem .9rem;
-  box-shadow: 0 8px 22px rgba(0,0,0,.35);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .18s ease, transform .18s ease;
-  z-index: 2000;
-  font-size: .95rem;
-}
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
+/* =========================================================
+   TOAST (popup email) — couche flottante avec animation
+   ========================================================= */
 .toast {
   position: fixed;
   left: 50%;
@@ -325,13 +290,11 @@ footer { padding: 1rem 2rem; color: #9fb1c2; }
   align-items: center;
   gap: .8rem;
 }
-
 .toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
   pointer-events: auto;
 }
-
 .toast-copy {
   background: var(--primary);
   border: none;
@@ -341,7 +304,116 @@ footer { padding: 1rem 2rem; color: #9fb1c2; }
   cursor: pointer;
   font-size: .85rem;
 }
+.toast-copy:hover { opacity: .85; }
 
-.toast-copy:hover {
-  opacity: 0.85;
+/* =========================================================
+   RESPONSIVE LÉGER — ajustements minimes
+   ========================================================= */
+@media (max-width: 600px) {
+  .menu-dropdown { min-width: 200px; }
+}
+
+/* =========================================================
+   *** CHANGEMENT CLÉ DEMANDÉ ***
+   - On NE colore PLUS <main> ni les conteneurs en --bg2.
+   - On laisse <main> transparent (ou sur bg1), et on donne
+     --bg2 UNIQUEMENT aux <section> de la grille principale.
+   ========================================================= */
+
+/* Ancien comportement supprimé :
+   main { background: var(--bg2); color: var(--text); }
+   → On rend main transparent pour laisser apparaître --bg1. */
+main {
+  background: transparent;   /* ⟵ AVANT: var(--bg2) */
+  color: var(--text);
+}
+
+/* Les sections "simples" en dehors de .main-grid restent gérées
+   par leurs styles locaux. Pas de fond ici pour éviter les conflits. */
+main section {
+  background: transparent;   /* ⟵ Pas de bg2 global ici */
+}
+
+/* =========================================================
+   CONTENEUR PRINCIPAL (.main-grid)
+   - Désormais TRANSPARENT : on n’y applique plus --bg2
+   - Ce sont SES ENFANTS <section> qui reçoivent --bg2
+   ========================================================= */
+.main-grid {
+  background: transparent;     /* ⟵ AVANT: var(--bg2) */
+  color: var(--text);
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 1.5rem 0 2rem;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;  /* mobile d’abord */
+}
+
+/* Les SECTIONS dans la grille :
+   - Reçoivent —bg2 (cœur de ta demande)
+   - Garde un léger border pour le relief
+   - scroll-margin-top pour header sticky */
+.main-grid > section { 
+  scroll-margin-top: 84px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  background: var(--bg2);       /* ⟵ FOND DÉSORMAIS ICI */
+}
+body.light .main-grid > section { border-color: rgba(0,0,0,.08); }
+
+/* =========================================================
+   LAYOUT DESKTOP — Zones explicites via grid-areas
+   ========================================================= */
+@media (min-width: 920px) {
+  .main-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-areas:
+      "about     about"
+      "skills    skills"
+      "projects  projects"
+      "passions  passions";
+  }
+  .about    { grid-area: about; }
+  .skills   { grid-area: skills; }
+  .projects { grid-area: projects; }
+  .passions { grid-area: passions; }
+}
+
+/* =========================================================
+   GRILLES INTERNES — compétences / cards fluides
+   ========================================================= */
+.skills-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr; /* mobile */
+}
+@media (min-width: 720px) {
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.cards-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* =========================================================
+   LISTES — tags + bullets
+   ========================================================= */
+.tags {
+  list-style: none; padding: 0; margin: .6rem 0 0;
+  display: flex; flex-wrap: wrap; gap: .4rem;
+}
+.tags li {
+  padding: .2rem .55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  font-size: .85rem; opacity: .95;
+}
+body.light .tags li { border-color: rgba(0,0,0,.12); }
+
+.bullets { 
+  margin: .6rem 0 0 1rem; 
 }
