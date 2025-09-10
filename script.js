@@ -134,3 +134,61 @@ const openMenu = () => {
   setShadow();
   window.addEventListener("scroll", setShadow, { passive: true });
 })();
+
+
+// Mailto + popup anti-scraping basique
+(function emailButton() {
+  const btn = document.getElementById('emailBtn');
+  if (!btn) return;
+
+  // petit helper toast
+  const showToast = (text, ms = 10000) => {
+  const t = document.createElement('div');
+  t.className = 'toast';
+
+  // Contenu du popup : adresse + bouton
+  const span = document.createElement('span');
+  span.textContent = text;
+
+  const btnCopy = document.createElement('button');
+  btnCopy.textContent = "Copier";
+  btnCopy.className = "toast-copy";
+
+  btnCopy.addEventListener('click', () => {
+    navigator.clipboard.writeText(text).then(() => {
+      btnCopy.textContent = "Copié !";
+      setTimeout(() => btnCopy.textContent = "Copier", 2000);
+    });
+  });
+
+  t.appendChild(span);
+  t.appendChild(btnCopy);
+  document.body.appendChild(t);
+
+  // transition entrée
+  t.offsetHeight;
+  t.classList.add('show');
+
+  // disparition après X sec
+  setTimeout(() => {
+    t.classList.remove('show');
+    setTimeout(() => t.remove(), 200);
+  }, ms);
+};
+
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const user = btn.dataset.user;      // "giremu.jp"
+    const domain = btn.dataset.domain;  // "gmail.com"
+    if (!user || !domain) return;
+
+    const addr = `${user}@${domain}`;
+    // Ouvre le client mail (mailto)
+    const subject = encodeURIComponent('Contact Portfolio');
+    window.location.href = `mailto:${addr}?subject=${subject}`;
+
+    // Petit popup informatif
+    showToast(`Email : ${addr}`);
+  });
+})();
