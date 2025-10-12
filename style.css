@@ -1,0 +1,136 @@
+:root { --bg:#efefef; --fg:#0b0b0b; --muted:#6b6b6b; --frame:#cfcfcf; }
+:root.dark { --bg:#0b0b0b; --fg:#ececec; --muted:#a3a3a3; --frame:#2a2a2a; }
+*{box-sizing:border-box;font-family: "Zen Kaku Gothic New", sans-serif;} html,body{height:100%}
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.4}
+
+
+.frame{position:fixed;margin:15px;inset:12px;border:1px solid var(--frame);border-radius:10px;pointer-events:none}
+.shell{max-width:1100px;margin:0 auto;padding:60px 48px}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+header h1{margin:0;font-weight:400;letter-spacing:.4px;font-size:clamp(28px,5vw,48px)}
+.role{margin-top:4px;font-size:14px;color:var(--muted)}
+.lang a{margin-left:12px;text-decoration:none;color:var(--fg);font-weight:600}
+.lang a[aria-current="page"]{text-decoration:underline}
+
+
+.bio-only{margin-top:28px;min-height:40vh}
+.bio{max-width:340px;margin-left:auto;font-size:13px}
+.bio p{margin:30px 0}
+
+
+/* Conteneur fixé, centré pile sur la bordure gauche du frame (inset:12px) */
+.lang-left{
+  position: fixed;
+  left: 12px;               /* même valeur que .frame { inset:12px } */
+  top: 35%;
+  transform: translate(-50%, -50%); /* centre sur la ligne de bordure */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 20;
+  margin:15px;
+  padding: 8px 6px;
+  border: 1px solid var(--frame);
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+/* Images (drapeaux / icônes) */
+.lang-left a img{
+  width: 22px;   /* ajuste la taille si besoin */
+  height: 22px;
+  display: block;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* Survol */
+.lang-left a:hover img{
+  transform: translateY(-1px);
+  filter: contrast(110%);
+  border-color: var(--fg);
+}
+
+
+
+/* Rail gauche : boutons + libellés *//* remplace .rail-left par .theme-toggle */
+.theme-bottom-right {
+  position: fixed;
+  right: 12px;                    /* aligné sur la bordure du frame */
+  bottom: 3%;
+  transform: translate(50%, 50%); /* centre sur l’angle */
+  display: flex;
+  flex-direction: column;         /* empile Light & Dark */
+  align-items: center;
+  gap: 16px;                      /* espace entre Light et Dark */
+  z-index: 20;
+  
+  /* ton style conservé */
+  margin: 10% 15px;
+  padding: 8px 10px;
+  border: 1px solid var(--frame);
+  border-radius: 5px;
+  background: var(--bg);
+}
+
+/* chaque ligne Light/Dark : carré + texte horizontal */
+.toggle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* petits carrés */
+.theme-bottom-right .swatch {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--frame);
+  background: var(--bg);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.theme-bottom-right .swatch.active {
+  background: var(--fg);
+}
+
+/* textes HORIZONTAUX */
+.theme-bottom-right .label {
+  writing-mode: vertical-rl;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+/* léger effet au survol */
+.toggle-item:hover .label {
+  color: var(--fg);
+}
+
+/* Smooth theme transitions */
+* {
+  transition: background-color .4s ease, color .4s ease,
+              border-color .4s ease, outline-color .4s ease,
+              box-shadow .4s ease, fill .4s ease, stroke .4s ease;
+}
+
+/* Pas d'anim si l'utilisateur préfère réduire les mouvements */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* Pas d'anim au tout premier paint (évite le flash animé) */
+html.no-anim, html.no-anim * { transition: none !important; }
+
+
+
+
+
+
+
+@media (max-width:900px){.bio{margin-left:0;max-width:100%}}
