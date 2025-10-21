@@ -1,5 +1,5 @@
 /* ============================
-   0) Variables & Reset
+    Variables & Reset
 ============================ */
 :root{
   --bg:#efefef;
@@ -7,8 +7,17 @@
   --muted:#6b6b6b;
   --frame:#cfcfcf;
   --accent:#0ea5e9;
+
   --radius:10px;
   --space:clamp(16px, 3vw, 48px);
+
+  /* aides responsive */
+  --frame-margin: 0.9rem;
+  --frame-inset: 8px;
+  --frame-border: 1px;
+
+  --tap: clamp(36px, 4.2vw, 44px);
+  --gap: clamp(8px, 1.2vw, 16px);
 }
 :root.dark{
   --bg:#0b0b0b;
@@ -17,17 +26,18 @@
   --frame:#2a2a2a;
 }
 
-/* Respecte le thème système par défaut (facultatif) */
+/* Default theme */
 @media (prefers-color-scheme: dark){
   :root:not(.light){ color-scheme: dark; }
 }
 
-/* Reset minimal & typo */
-*{ box-sizing:border-box; }
-html,body{ height:100%; }
+*{ box-sizing:border-box }
+html{ height:100%; font-size: clamp(16px, 1.1vw + 8px, 20px); }
 body{
+  height:100%;
   margin:0;
-  font-family: "Zen Kaku Gothic New", Inter, system-ui, Arial, sans-serif;
+  font-size:1rem;
+  font-family:"Zen Kaku Gothic New", Inter, system-ui, Arial, sans-serif;
   background:var(--bg);
   color:var(--fg);
   line-height:1.5;
@@ -36,86 +46,94 @@ body{
   -moz-osx-font-smoothing:grayscale;
 }
 
-/* Transitions douces (limitées) */
+/* Transitions */
 html:not(.no-anim) body,
 html:not(.no-anim) .frame,
 html:not(.no-anim) .cat-btn,
 html:not(.no-anim) .theme-bottom-right,
 html:not(.no-anim) .lang-left{
-  transition:
-    background-color .35s ease,
-    color .35s ease,
-    border-color .35s ease,
-    box-shadow .35s ease;
+  transition: background-color .35s ease, color .35s ease, border-color .35s ease, box-shadow .35s ease;
 }
-
-/* Pas d'anim si l’utilisateur réduit les mouvements */
 @media (prefers-reduced-motion: reduce){
   *{ transition:none !important; animation:none !important; }
 }
 html.no-anim, html.no-anim *{ transition:none !important; }
 
 /* ============================
-   1) Layout principal
+    Main Layout
 ============================ */
 .frame{
   position:fixed;
-  inset: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
-  margin:15px;
+  inset: max(var(--frame-inset), env(safe-area-inset-top))
+         max(var(--frame-inset), env(safe-area-inset-right))
+         max(var(--frame-inset), env(safe-area-inset-bottom))
+         max(var(--frame-inset), env(safe-area-inset-left));
+  margin:var(--frame-margin);
   border:1px solid var(--frame);
   border-radius:var(--radius);
   pointer-events:none;
 }
 
-/* Conteneur */
 .shell{
-  max-width:1100px;
+  max-width:min(1100px, 92vw);
   margin:0 auto;
-  padding:clamp(28px, 6vw, 60px) clamp(20px, 5vw, 48px);
+  padding:clamp(1.4rem, 6vw, 3rem) clamp(1rem, 5vw, 2.4rem);
 }
 
-/* Header */
 header{
   display:flex;
   align-items:flex-end;
   justify-content:space-between;
-  gap:16px;
+  gap:clamp(10px, 2vw, 16px);
 }
 header h1{
   margin:0;
   font-weight:500;
   letter-spacing:.4px;
-  font-size:clamp(24px, 5vw, 48px);
+  font-size:2.4rem;
 }
 .role{
-  margin-top:4px;
-  font-size:clamp(12px, 1.6vw, 14px);
+  margin-top:0.2rem;
+  font-size:0.75rem;
   color:var(--muted);
 }
 .lang a{
-  margin-left:12px;
+  margin-left:0.6rem;
   text-decoration:none;
   color:var(--fg);
   font-weight:600;
 }
 .lang a[aria-current="page"]{ text-decoration:underline; }
 
-/* Corps & Bio */
-.bio-only{ margin-top:28px; min-height:40vh; }
-.bio{
-  max-width:42ch;
-  margin-left:auto;
-  font-size:clamp(13px, 1.6vw, 15px);
+.section-layout{
+  display:grid;
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+  align-items:start;
+  gap: clamp(1rem, 4vw, 3rem);
+  margin-top: 2rem;
 }
-.bio p{ margin:30px 0; }
+@media (max-width: 900px){
+  .section-layout{
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin-top: 1.2rem;
+  }
+}
+
+.bio-only{ min-height:40vh; }
+.bio{
+  max-width: 62ch;
+  margin-left:auto;
+  font-size:0.8rem;
+}
+.bio p{ margin:1.2rem 0; }
 
 /* ============================
-   2) Sélecteur de langue (rail)
+    Language
 ============================ */
-/* Par défaut (desktop) : colonne fixée à gauche */
 .lang-left{
   position:fixed;
-  left:12px;                 /* aligné au frame (inset:12px) */
+  left:12px;
   top:35%;
   transform:translate(-50%, -50%);
   display:flex;
@@ -123,29 +141,27 @@ header h1{
   align-items:center;
   gap:12px;
   z-index:20;
-  margin:15px;
-  padding:8px 6px;
+  margin:0.75rem;
+  padding:0.4rem 0.3rem;
   border:1px solid var(--frame);
   border-radius:6px;
   background:var(--bg);
   backdrop-filter:saturate(110%) blur(2px);
 }
 
-/* Icônes/drapeaux touch-friendly */
 .lang-left a{
   display:grid;
   place-items:center;
-  width:40px; height:40px;            /* cible tactile ≥ 40px */
+  width:36px; height:36px;
   border-radius:8px;
 }
 .lang-left a img{
-  width:22px; height:22px;
+  width:19px; height:19px;
   display:block; object-fit:contain;
   border-radius:4px;
 }
 .lang-left a:hover img{ transform:translateY(-1px); filter:contrast(110%); }
 
-/* Sur mobile : barre horizontale en bas-gauche */
 @media (max-width:600px){
   .lang-left{
     left:auto; right:auto;
@@ -154,17 +170,17 @@ header h1{
     flex-direction:row;
     gap:8px;
     margin:0;
-    padding:6px 8px;
+    padding:0.3rem 0.4rem;
     border-radius:999px;
   }
 }
 
 /* ============================
-   3) Toggle Light/Dark (rail)
+    Toggle Light/Dark
 ============================ */
 .theme-bottom-right{
   position:fixed;
-  right:12px;
+  right:10px;
   bottom:3%;
   transform:translate(50%, 50%);
   display:flex;
@@ -172,8 +188,8 @@ header h1{
   align-items:center;
   gap:16px;
   z-index:20;
-  margin:10% 15px;
-  padding:8px 10px;
+  margin:10% 0.75rem;
+  padding:0.4rem 0.5rem;
   border:1px solid var(--frame);
   border-radius:8px;
   background:var(--bg);
@@ -189,7 +205,6 @@ header h1{
   -webkit-tap-highlight-color:transparent;
 }
 
-/* carrés */
 .theme-bottom-right .swatch{
   width:16px; height:16px;
   border:1px solid var(--frame);
@@ -199,10 +214,9 @@ header h1{
 }
 .theme-bottom-right .swatch.active{ background:var(--fg); }
 
-/* libellés verticaux (desktop) */
 .theme-bottom-right .label{
   writing-mode:vertical-rl;
-  font-size:11px;
+  font-size:0.55rem;
   color:var(--muted);
   letter-spacing:.12em;
   user-select:none;
@@ -210,14 +224,13 @@ header h1{
 }
 .toggle-item:hover .label{ color:var(--fg); }
 
-/* Sur petits écrans : rangée horizontale, lisible + tap-targets */
 @media (max-width:600px){
   .theme-bottom-right{
     right: max(12px, env(safe-area-inset-right));
     bottom: max(12px, env(safe-area-inset-bottom));
     transform:none;
     margin:0;
-    padding:8px 10px;
+    padding:0.4rem 0.5rem;
     flex-direction:row;
     gap:12px;
     border-radius:999px;
@@ -228,36 +241,37 @@ header h1{
   }
   .theme-bottom-right .label{
     writing-mode:horizontal-tb;
-    font-size:12px;
+    font-size:0.6rem;
     letter-spacing:.02em;
   }
 }
 
 /* ============================
-   4) Catégories (barre & boutons)
+    Catégories
 ============================ */
 .categories{
   display:flex;
-  gap:8px;
-  margin:20px 0 8px;
-  flex-wrap:wrap;
+  flex-direction:column;
+  align-items:stretch;
+  gap: clamp(0.5rem, 1.2vw, 0.8rem);
+  margin: 0;
+  width:100%;
+  max-width:260px;
 }
 .cat-btn{
   border:1px solid var(--frame);
   background:transparent;
   color:var(--fg);
-  padding:8px 12px;
-  border-radius:999px;
-  font-size:13px;
+  padding: clamp(0.55rem, 1.2vw, 0.8rem) clamp(0.7rem, 1.6vw, 1rem);
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
   letter-spacing:.02em;
   cursor:pointer;
   user-select:none;
-  transition:
-    transform .12s ease,
-    background-color .2s ease,
-    color .2s ease,
-    border-color .2s ease,
-    box-shadow .2s ease;
+  width:100%;
+  min-height: var(--tap);
+  text-align:center;
+  transition: transform .12s ease, background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
 .cat-btn:hover{ transform:translateY(-1px); }
 .cat-btn:focus-visible{
@@ -271,38 +285,134 @@ header h1{
   box-shadow:0 0 0 2px color-mix(in oklab, var(--accent) 55%, transparent);
 }
 
-/* Apparition douce des éléments de .bio */
-@keyframes giremu-fade{
-  from{ opacity:0; transform:translateY(2px); }
-  to{ opacity:1; transform:none; }
+/* ============================
+   @ Giremu
+============================ */
+.yey{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom: calc(
+    var(--frame-margin) +
+    max(var(--frame-inset), env(safe-area-inset-bottom)) +
+    var(--frame-border) +
+    0.25rem
+  );
+  font-size:0.7rem;
+  color:var(--muted);
+  letter-spacing:.12em;
+  z-index:10;
 }
-.bio > *{ animation:giremu-fade .18s ease-out; }
 
 /* ============================
-   5) Responsif – breakpoints
+    Responsive (Oskour...)
 ============================ */
-/* ≤ 900px : bio pleine largeur, paddings adoucis */
-@media (max-width:900px){
-  .bio{ margin-left:0; max-width:100%; }
-  .shell{ padding:clamp(20px, 5vw, 40px) clamp(16px, 4vw, 32px); }
+@media (max-width:1100px){
+  .bio{ max-width:58ch; }
 }
 
-/* ≤ 600px : hiérarchie visuelle, ergonomie */
-@media (max-width:600px){
+@media (max-width:900px){
   header{ align-items:flex-start; gap:10px; }
-  header h1{ font-size:clamp(22px, 8vw, 32px); }
-  .role{ font-size:12px; }
-  .categories{ gap:6px; }
-  .cat-btn{ padding:7px 10px; font-size:12px; }
-  .frame{
-    /* réduit l’encombrement du cadre sur mobile */
-    margin:8px;
-    border-radius:8px;
+  header h1{ font-size:1.8rem; }
+  .role{ font-size:0.7rem; }
+  .bio{ max-width:100%; margin-left:0;}
+  .section-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .categories {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .cat-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .bio-only, .bio {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 90%;
+
   }
 }
 
-/* ≥ 1200px : ré-élargir confortablement */
+@media (max-width:600px){
+  header h1{ font-size:1.6rem}
+  .role{ font-size:0.6rem}
+  .shell{ padding:clamp(1rem, 5vw, 2rem) clamp(0.8rem, 4vw, 1.6rem)}
+  .frame{ margin:0.4rem; border-radius:8px}
+  .yey{ font-size:0.65rem}
+  .lang-left{
+    position: fixed;
+    left: calc(var(--frame-margin) + max(var(--frame-inset), env(safe-area-inset-left)));
+    bottom: calc(var(--frame-margin) + max(var(--frame-inset), env(safe-area-inset-bottom)));
+    top: auto; right: auto;
+    transform: none;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(6px, 2.8vw, 12px);
+    margin: 0;
+    padding: 0.35rem 0.6rem;
+    border-radius: 15px;
+    z-index: 30;
+    background: var(--bg);
+    border: 1px solid var(--frame);
+    backdrop-filter: saturate(110%) blur(2px)
+  }
+  .lang-left a{
+    width: clamp(36px, 8vw, 44px);
+    height: clamp(36px, 8vw, 44px);
+    border-radius: 12px
+  }
+  .lang-left a img{
+    width: 60%; height: 60%
+  }
+
+  .theme-bottom-right{
+    position: fixed;
+    right: calc(var(--frame-margin) + max(var(--frame-inset), env(safe-area-inset-right)));
+    bottom: calc(var(--frame-margin) + max(var(--frame-inset), env(safe-area-inset-bottom)));
+    top: auto;
+    transform: none;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(8px, 3vw, 12px);
+    margin: 0;
+    padding: 0.4rem 0.6rem;
+    border-radius: 15px;
+    z-index: 30;
+    background: var(--bg);
+    border: 1px solid var(--frame);
+    backdrop-filter: saturate(110%) blur(2px)
+  }
+  .theme-bottom-right .label{
+    writing-mode: horizontal-tb;
+    font-size: 0.6rem;
+    letter-spacing: .02em
+  }
+
+  .yey{
+    bottom: calc(
+      var(--frame-margin)
+      + max(var(--frame-inset), env(safe-area-inset-bottom))
+      + 3.2rem
+      );
+    text-align: center;
+    width: 100%
+  }
+}
+
 @media (min-width:1200px){
-  .shell{ padding:60px 48px; }
-  .bio{ max-width:48ch; }
+  .shell{ padding:3rem 2.4rem}
+  .bio{ max-width:48ch}
 }
