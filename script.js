@@ -29,7 +29,7 @@ document.querySelectorAll('.toggle-item').forEach(el => {
 ================================== */
 const bioContents = {
   aboutMe: `
-    <p> Diplômé en <strong>cybersécurité et infrastructures</strong> puis passionné par les systèmes, les réseaux et l’automatisation, je <strong>construis pas à pas un parcours technique solide, entre études, alternance et projets personnels.</strong><br><br>Mon objectif : M’installer durablement au <strong>Japon</strong> puis mettre <strong>mes compétences au service de ceux qui me feront confiance.</strong></p>
+    <p> Diplômé en <strong>cybersécurité et infrastructures</strong> puis passionné par les systèmes, les réseaux et l’automatisation, je <strong>construis pas à pas un parcours technique solide, entre études, alternance et projets personnels.</strong><br><br>Mon objectif : M’installer durablement pour mettre <strong>mes compétences au service de ceux qui me feront confiance.</strong></p>
   `,
   // Section "parcours" injectée par buildTimelineVertical()
   parcours: `<div id="parcours-root"></div>`,
