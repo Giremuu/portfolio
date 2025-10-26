@@ -1,0 +1,57 @@
+/* ============================
+    Variables & Reset
+============================ */
+:root{
+  --bg:#efefef;
+  --fg:#0b0b0b;
+  --muted:#6b6b6b;
+  --frame:#cfcfcf;
+  --accent:#0ea5e9;
+
+  --radius:10px;
+  --space:clamp(16px, 3vw, 48px);
+
+  --frame-margin: 0.9rem;
+  --frame-inset: 8px;
+  --frame-border: 1px;
+
+  --tap: clamp(36px, 4.2vw, 44px);
+  --gap: clamp(8px, 1.2vw, 16px);
+}
+:root.dark{
+  --bg:#0b0b0b;
+  --fg:#ececec;
+  --muted:#a3a3a3;
+  --frame:#2a2a2a;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not(.light){ color-scheme: dark; }
+}
+
+*{ box-sizing:border-box }
+html{ height:100%; font-size: clamp(16px, 1.1vw + 8px, 20px); }
+body{
+  height:100%;
+  margin:0;
+  font-size:1rem;
+  font-family:"Zen Kaku Gothic New", Inter, system-ui, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--fg);
+  line-height:1.5;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+html:not(.no-anim) body,
+html:not(.no-anim) .frame,
+html:not(.no-anim) .cat-btn,
+html:not(.no-anim) .theme-bottom-right,
+html:not(.no-anim) .lang-left{
+  transition: background-color .35s ease, color .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; animation:none !important; }
+}
+html.no-anim, html.no-anim *{ transition:none !important; }

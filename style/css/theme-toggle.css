@@ -1,0 +1,45 @@
+/* ============================
+    Toggle Light/Dark
+============================ */
+.theme-bottom-right{
+  position:fixed;
+  right:10px;
+  bottom:3%;
+  transform:translate(50%, 50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+  z-index:20;
+  margin:10% 0.75rem;
+  padding:0.4rem 0.5rem;
+  border:1px solid var(--frame);
+  border-radius:8px;
+  background:var(--bg);
+  backdrop-filter:saturate(110%) blur(2px);
+}
+.toggle-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.theme-bottom-right .swatch{
+  width:16px; height:16px;
+  border:1px solid var(--frame);
+  background:var(--bg);
+  border-radius:3px;
+  transition:background .2s ease, border-color .2s ease;
+}
+.theme-bottom-right .swatch.active{ background:var(--fg); }
+.theme-bottom-right .label{
+  writing-mode:vertical-rl;
+  font-size:0.55rem;
+  color:var(--muted);
+  letter-spacing:.12em;
+  user-select:none;
+  transition:color .2s ease;
+}
+.toggle-item:hover .label{ color:var(--fg); }

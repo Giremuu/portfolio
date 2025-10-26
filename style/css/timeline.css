@@ -1,0 +1,99 @@
+/* ============================
+   Partie parcours
+============================ */
+.timeline{
+  display:flex;
+  align-items:flex-start;
+  gap:2.5rem;
+  margin-left:-120px;
+}
+
+.timeline-header{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:.5rem;
+}
+
+.timeline .nav{
+  inline-size:40px;
+  block-size:40px;
+  border-radius:999px;
+  border:1px solid var(--border, #2d2d2d);
+  background:transparent;
+  display:grid;
+  place-items:center;
+  font-size:1.2rem;
+  cursor:pointer;
+  transition:transform .15s ease;
+}
+.timeline .nav:hover{ transform:scale(1.06); }
+.timeline .nav:active{ transform:scale(0.98); }
+
+.years-vert{
+  display:flex;
+  flex-direction:column;
+  gap:.25rem;
+  flex:0 0 160px;
+  max-height:260px;
+  overflow-y:auto;
+  padding:.25rem 0;
+}
+.years-vert .year-btn{
+  appearance:none;
+  background:transparent;
+  border:0;
+  text-align:left;
+  padding:.35rem .5rem .35rem 1rem;
+  border-radius:.4rem;
+  cursor:pointer;
+  font:inherit;
+  opacity:.85;
+  transition: opacity .15s ease, transform .08s ease, color .15s ease;
+}
+.years-vert .year-btn:hover{ opacity:1; transform: translateX(2px); }
+.years-vert .year-btn[aria-selected="true"]{
+  font-weight:600;
+  opacity:1;
+  position:relative;
+  color: var(--accent);
+}
+.years-vert .year-btn[aria-selected="true"]::before{
+  content:"";
+  position:absolute;
+  left:.3rem;
+  top:50%;
+  transform: translateY(-50%);
+  width:3px;
+  height:70%;
+  background: var(--accent);
+  border-radius:2px;
+}
+
+.year-content{
+  flex:1 1 auto;
+  border:1px solid var(--border, #2d2d2d);
+  border-radius:.75rem;
+  padding:1rem;
+  text-align: left;
+}
+.year-content h3{
+  margin:0 0 .25rem 0;
+  font-size:1.05rem;
+  opacity:.9;
+  text-align:center
+}
+.year-content .tag{
+  display:inline-block;
+  font-size:.78rem;
+  opacity:.8;
+}
+.year-content ul{
+  list-style:none;
+  padding-left:0;
+  margin:0.6rem 0;
+}
+.year-content ul li{margin:0; text-align:center}
+
+/* Ajustements */
+.years-vert { overflow: visible !important; max-height: none !important; }

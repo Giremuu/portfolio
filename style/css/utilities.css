@@ -1,0 +1,18 @@
+/* ============================
+   @ Giremu
+============================ */
+.yey{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom: calc(
+    var(--frame-margin) +
+    max(var(--frame-inset), env(safe-area-inset-bottom)) +
+    var(--frame-border) +
+    0.25rem
+  );
+  font-size:0.7rem;
+  color:var(--muted);
+  letter-spacing:.12em;
+  z-index:10;
+}

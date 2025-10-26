@@ -1,0 +1,61 @@
+/* ============================
+    Main Layout
+============================ */
+.frame{
+  position:fixed;
+  inset: max(var(--frame-inset), env(safe-area-inset-top))
+         max(var(--frame-inset), env(safe-area-inset-right))
+         max(var(--frame-inset), env(safe-area-inset-bottom))
+         max(var(--frame-inset), env(safe-area-inset-left));
+  margin:var(--frame-margin);
+  border:1px solid var(--frame);
+  border-radius:var(--radius);
+  pointer-events:none;
+}
+
+.shell{
+  max-width:min(1100px, 92vw);
+  margin:0 auto;
+  padding:clamp(1.4rem, 6vw, 3rem) clamp(1rem, 5vw, 2.4rem);
+}
+
+header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:clamp(10px, 2vw, 16px);
+}
+header h1{
+  margin:0;
+  font-weight:500;
+  letter-spacing:.4px;
+  font-size:2.4rem;
+}
+.role{
+  margin-top:0.2rem;
+  font-size:0.75rem;
+  color:var(--muted);
+}
+.lang a{
+  margin-left:0.6rem;
+  text-decoration:none;
+  color:var(--fg);
+  font-weight:600;
+}
+.lang a[aria-current="page"]{ text-decoration:underline; }
+
+.section-layout{
+  display:grid;
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+  align-items:start;
+  gap: clamp(1rem, 4vw, 3rem);
+  margin-top: 2rem;
+}
+
+.bio-only{ min-height:40vh; }
+.bio{
+  max-width: 62ch;
+  margin-left:auto;
+  font-size:0.8rem;
+}
+.bio p{ margin:1.2rem 0; }
