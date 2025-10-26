@@ -1,0 +1,92 @@
+/* === Section Compétences === */
+.skills-section {
+  padding: var(--space);
+  color: var(--fg);
+}
+
+.skills-title {
+  margin: 0 0 calc(var(--space) * 0.5) 0;
+  font-size: clamp(1.4rem, 3.6vw, 2rem);
+  color: var(--fg);
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.skill-item {
+  background: var(--bg);
+  border: 1px solid var(--frame);
+  border-radius: var(--radius);
+  padding: .7rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.skill-item[open] {
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 25%, transparent);
+}
+
+.skill-summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--fg);
+  list-style: none;
+  outline: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skill-summary::-webkit-details-marker {
+  display: none;
+}
+
+.skill-summary::after {
+  content: '›';
+  transform: rotate(90deg);
+  transition: transform 0.2s ease;
+  text-align: right;
+  color: var(--muted);
+}
+
+.skill-item[open] .skill-summary::after {
+  transform: rotate(270deg);
+}
+
+.skill-content {
+  margin-top: .3rem;
+  line-height: 1.45;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+
+/* Étire les cartes sur toute la largeur du conteneur */
+.skills-list{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  align-items: stretch;           /* <— clé */
+}
+
+.skill-item{
+  display: block;                 /* details est block, on force au cas où */
+  width: 100%;                    /* <— prend toute la ligne */
+  box-sizing: border-box;         /* inclut padding/border dans la largeur */
+}
+
+/* Le header prend toute la largeur aussi */
+.skill-summary{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Option: si tu avais mis un max-width quelque part, neutralise-le ici */
+.skill-item,
+.skill-summary { max-width: none; }
+

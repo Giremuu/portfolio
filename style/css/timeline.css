@@ -41,6 +41,7 @@
 }
 .years-vert .year-btn{
   appearance:none;
+  color: var(--fg);
   background:transparent;
   border:0;
   text-align:left;
@@ -79,13 +80,13 @@
 }
 .year-content h3{
   margin:0 0 .25rem 0;
-  font-size:1.05rem;
+  font-size:0.95rem;
   opacity:.9;
   text-align:center
 }
 .year-content .tag{
-  display:inline-block;
-  font-size:.78rem;
+  display:grid;
+  font-size:.62rem;
   opacity:.8;
 }
 .year-content ul{
@@ -95,5 +96,4 @@
 }
 .year-content ul li{margin:0; text-align:center}
 
-/* Ajustements */
 .years-vert { overflow: visible !important; max-height: none !important; }
